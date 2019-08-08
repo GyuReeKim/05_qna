@@ -1,9 +1,50 @@
 {% extends 'base.html' %}
 {% block body %}
   {% for question in questions %}
+    <div class="jumbotron pt-4 pb-4 mb-2">
+      <h1 class="display-5">{{question.title}}</h1>
+      <p class="pt-1">{{question.user}}</p>
+      <hr class="mb-3">
+      <p class="lead">{{question.content}}</p>
+      <a class="btn btn-danger btn-lg mt-5" href="/questions/{{question.id}}/delete/" role="button" onclick="return confirm('삭제하시겠습니까?')">삭제하기</a>
+    </div>
+    <form action="/questions/{{question.id}}/answers/create/">
+      <div class="card">
+        <div class="container">
+          <div class="card-header row">
+            <div class="col-">
+              <label class="pt-2" for="reply">댓글</label>
+            </div>
+            <div class="col-md">
+              <input type="text" class="form-control" id="reply" name="content" placeholder="댓글을 작성하세요.">
+            </div>
+            <div class="col-">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for answer in question.answer_set.all %}
+          <li class="list-group-item">{{answer.content}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </form>
+    <hr class="my-3" style="border-style: dotted">
+  {% endfor %}
+
+  <!-- {% for question in questions %}
     <h1>{{question.title}}</h1>
     <p>{{question.user}}</p>
     <p>{{question.content}}</p>
+    <form action="/questions/{{question.id}}/answers/create/">
+      <input type="text" name="content">
+      <input type="submit">
+    </form>
+      {% for answer in question.answer_set.all %}
+        <p>{{answer.content}}</p>
+      {% endfor %}
     <hr>
-  {% endfor %}
+  {% endfor %} -->
+
 {% endblock %}
